@@ -1,0 +1,200 @@
+Country Name,Country Code,Per Capital Carbon
+Afghanistan,af,0.29
+Albania,al,1.50
+Algeria,ag,3.33
+Andorra,ad,6.64
+Angola,ao,1.56
+Antigua and Barbuda,ac,5.89
+Argentina,ar,4.47
+Armenia,am,1.42
+Aruba,aa,22.85
+Australia,as,16.93
+Austria,au,7.97
+Azerbaijan,aj,5.05
+"Bahamas, The",bf,6.84
+Bahrain,ba,19.34
+Bangladesh,bg,0.37
+Barbados,bb,5.36
+Belarus,bo,6.56
+Belgium,be,9.98
+Belize,bh,1.37
+Benin,bn,0.55
+Bermuda,bd,7.32
+Bhutan,bt,0.66
+Bolivia,bl,1.52
+Bosnia and Herzegovina,bk,8.09
+Botswana,bc,2.66
+Brazil,br,2.15
+Brunei Darussalam,bx,22.87
+Bulgaria,bu,6.04
+Burkina Faso,bv,0.11
+Burundi,by,0.03
+Cabo Verde,cv,0.73
+Cambodia,cb,0.29
+Cameroon,cm,0.35
+Canada,ca,14.68
+Cayman Islands,cj,10.64
+Central African Republic,ct,0.06
+Chad,cd,0.04
+Chile,ci,4.21
+China,cn,6.19
+Colombia,co,1.63
+Comoros,cn,0.20
+"Congo, Dem. Rep.",cg,0.05
+"Congo, Rep.",cf,0.49
+Costa Rica,cs,1.66
+Cote d'Ivoire,iv,0.31
+Croatia,hr,4.73
+Cuba,cu,3.40
+Cyprus,cy,6.98
+Czech Republic,ez,10.67
+Denmark,da,8.35
+Djibouti,dj,0.65
+Dominica,do,1.91
+Dominican Republic,dr,2.09
+Ecuador,ec,2.18
+"Egypt, Arab Rep.",eg,2.62
+El Salvador,es,1.00
+Equatorial Guinea,ek,6.72
+Eritrea,er,0.09
+Estonia,en,13.77
+Ethiopia,et,0.07
+Faeroe Islands,fo,14.35
+Fiji,fj,1.50
+Finland,fi,11.53
+France,fr,5.56
+French Polynesia,fp,3.30
+Gabon,gb,1.65
+"Gambia, The",ga,0.28
+Georgia,gg,1.40
+Germany,gm,9.11
+Ghana,gh,0.37
+Greece,gr,7.77
+Greenland,gl,11.15
+Grenada,gj,2.49
+Guatemala,gt,0.78
+Guinea,gv,0.11
+Guinea-Bissau,pu,0.15
+Guyana,gy,2.16
+Haiti,ha,0.21
+Honduras,ho,1.06
+"Hong Kong SAR, China",hk,5.17
+Hungary,hu,5.06
+Iceland,ic,6.17
+India,in,1.67
+Indonesia,id,1.80
+"Iran, Islamic Rep.",ir,7.68
+Iraq,iz,3.70
+Ireland,ei,8.77
+Israel,is,9.27
+Italy,it,6.85
+Jamaica,jm,2.66
+Japan,ja,9.19
+Jordan,jo,3.44
+Kazakhstan,kz,15.24
+Kenya,ke,0.30
+Kiribati,kr,0.64
+"Korea, Dem. Rep.",kn,2.92
+"Korea, Rep.",ks,11.49
+Kuwait,ku,31.32
+Kyrgyz Republic,kg,1.17
+Lao PDR,la,0.29
+Latvia,lg,3.63
+Lebanon,le,4.70
+Lesotho,lt,0.01
+Liberia,li,0.20
+Libya,ly,9.77
+Lithuania,lh,4.38
+Luxembourg,lu,21.36
+"Macao SAR, China",mc,1.93
+"Macedonia, FYR",mk,5.17
+Madagascar,ma,0.10
+Malawi,mi,0.08
+Malaysia,my,7.67
+Maldives,mv,3.30
+Mali,ml,0.04
+Malta,mt,6.25
+Marshall Islands,rm,1.96
+Mauritania,mr,0.61
+Mauritius,mp,3.21
+Mexico,mx,3.76
+"Micronesia, Fed. Sts.",fm,0.99
+Moldova,md,1.36
+Mongolia,mg,4.24
+Montenegro,mj,4.16
+Morocco,mo,1.60
+Mozambique,mz,0.12
+Myanmar,mm,0.17
+Namibia,wa,1.46
+Nepal,np,0.14
+Netherlands,nl,10.96
+New Caledonia,nc,15.68
+New Zealand,nz,7.22
+Nicaragua,nu,0.78
+Niger,ng,0.09
+Nigeria,ni,0.49
+Norway,no,11.70
+Oman,mu,20.41
+Pakistan,pk,0.93
+Panama,pm,2.62
+Papua New Guinea,pp,0.46
+Paraguay,pa,0.79
+Peru,pe,1.97
+Philippines,rp,0.87
+Poland,pl,8.31
+Portugal,po,4.95
+Qatar,qa,40.31
+Romania,ro,3.89
+Russian Federation,rs,12.23
+Rwanda,rw,0.05
+Samoa,ws,0.87
+Sao Tome and Principe,tp,0.56
+Saudi Arabia,sa,17.04
+Senegal,sg,0.55
+Serbia,ri,6.30
+Seychelles,se,7.84
+Sierra Leone,sl,0.12
+Singapore,sn,2.66
+Slovak Republic,lo,6.69
+Slovenia,si,7.48
+Small states,SST,3.54
+Solomon Islands,bp,0.38
+Somalia,so,0.06
+South Africa,sf,9.04
+South Asia,SAS,1.40
+Spain,sp,5.79
+Sri Lanka,ce,0.62
+St. Kitts and Nevis,scE,4.76
+St. Lucia,st,2.27
+St. Vincent and the Grenadines,vc,1.91
+Sudan,su,0.31
+Suriname,SUR,4.54
+Swaziland,wz,0.86
+Sweden,sw,5.60
+Switzerland,sz,4.95
+Syrian Arab Republic,sy,2.87
+Tajikistan,ti,0.38
+Tanzania,tz,0.15
+Thailand,th,4.45
+Timor-Leste,tt,0.17
+Togo,to,0.24
+Tonga,tn,1.51
+Trinidad and Tobago,td,38.16
+Tunisia,ts,2.45
+Turkey,tu,4.13
+Turkmenistan,tx,10.52
+Turks and Caicos Islands,tk,5.21
+Uganda,ug,0.11
+Ukraine,up,6.64
+United Arab Emirates,ae,19.85
+United Kingdom,uk,7.86
+United States,us,17.56
+Uruguay,uy,1.97
+Uzbekistan,uz,3.66
+Vanuatu,nh,0.50
+"Venezuela, RB",ve,6.95
+Vietnam,vm,1.73
+"Yemen, Rep.",ym,0.96
+Zambia,za,0.18
+Zimbabwe,zi,0.72
+,,
