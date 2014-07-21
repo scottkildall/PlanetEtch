@@ -18,7 +18,7 @@ city::~city() {
         delete [] vSquares;
 }
 
-void city::setVars(float _x, float _y, float pop, int _cnum) {
+void city::setVars(float _x, float _y, float _pop, unsigned long _cnum) {
     // init squares
     numSquares = pop/1000 + 1;  //(int)ofRandom(1, 20);
     /*if( numSquares < 10 )
@@ -33,12 +33,15 @@ void city::setVars(float _x, float _y, float pop, int _cnum) {
     x = _x;
     y = _y;
     cnum = _cnum;
-    
-    cout << "cnum = " << cnum;
+    pop = _pop;
+    //cout << "cnum = " << cnum;
     
     numSquares = 1;
     vSquares = new vSquare[numSquares];
+    vSquares->setVars(x,y,pop/50000);
     
+    
+    /*
     
     float dx = x;
    float dy = y;
@@ -51,10 +54,16 @@ void city::setVars(float _x, float _y, float pop, int _cnum) {
         dy += ofRandom(-s/2,s/2);
         (vSquares+i)->setVars(dx,dy,s);
     }
+     */
+     
+     
 
 }
 
 void city::draw(ofxVectorGraphics &output) {
+    //if( pop < 50000)
+     //   return;
+    
     for( int i = 0; i < numSquares; i++ ) {
         (vSquares+i)->draw(output);
     }

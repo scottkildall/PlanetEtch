@@ -22,12 +22,13 @@ public:
     city();
     ~city();
     
-    void setVars(float _x, float _y, float pop, int _cnum );   //, char *theCountry);
+    void setVars(float _x, float _y, float _pop, unsigned long );
     void draw(ofxVectorGraphics &output);
     
     float x;
     float y;
-    int cnum;
+    float pop;
+    unsigned long cnum;
     
 private:
     char country[256];

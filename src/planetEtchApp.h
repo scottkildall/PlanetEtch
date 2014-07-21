@@ -4,7 +4,11 @@
 #include "ofMain.h"
 #include "city.h"
 
-#define CANVAS_RATIO (5.17)
+#include "ofxCsv.h"
+using namespace wng;
+
+//#define CANVAS_RATIO (5.17)
+#define CANVAS_RATIO (1)
 #define CANVAS_WIDTH (1280)
 #define CANVAS_HEIGHT (CANVAS_WIDTH/CANVAS_RATIO)
 #define CANVAS_MARGIN (20)
@@ -38,11 +42,18 @@ class planetEtchApp : public ofBaseApp{
         float adjustY(float y);
         float map(float x, float in_min, float in_max, float out_min, float out_max);
     
+        float lngToX(float x);
+        float latToY(float y);
+    
+        unsigned long getNumCities(ofxCsv csv, float popMin);
+    
+        unsigned long  hash(const char *str);
     
         void initCities();
         city *cities;
         long numCities;
 
+        void filterCSV();
 
 };
 

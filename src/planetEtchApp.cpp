@@ -1,15 +1,38 @@
 #include "planetEtchApp.h"
 #include "ofUtils.h"
-#include "ofxCsv.h"
-using namespace wng;
 
 #include <stdlib.h>
+
+//--------------------------------------------------------------
+// INPUT CSV: millions of records
+// Country,City,AccentCity,Region,Population,Latitude,Longitude
+#define INPUT_COL_COUNTRY         (0)
+#define INPUT_COL_CITY            (2)
+#define INPUT_COL_POP             (4)
+#define INPUT_COL_LAT             (5)
+#define INPUT_COL_LNG             (6)
+//--------------------------------------------------------------
+// OUTPUT CSV: ~50000 records
+// 1,Dubai,25.258171,55.304718,0.0,1137.376
+#define OUTPUT_COL_COUNTRY          (0)
+#define OUTPUT_COL_CITY             (1)
+#define OUTPUT_COL_POP              (2)
+#define OUTPUT_COL_LAT              (3)
+#define OUTPUT_COL_LNG              (4)
+
+// uncommenting will make it so that we go through the worlds CSV file
+//     and extract only cities that have a non-zero population
+// #define FILTER_CSV
 
 //--------------------------------------------------------------
 void planetEtchApp::setup(){
 	capture = false;
     numCities = 0;
     cities = NULL;
+    
+#ifdef FILTER_CSV
+    filterCSV();
+#endif
     
     initCities();
 }
@@ -27,7 +50,7 @@ void planetEtchApp::draw(){
 	//so we only capture one frame when capture
 	//is set to true
 	if(capture){
-		output.beginEPS("test.ps");
+		output.beginEPS("citypop.ps");
 	}
 
 	//do we want filled shapes or outlines?
@@ -48,7 +71,7 @@ void planetEtchApp::draw(){
                 //cout << endl;
                 ofSetHexColor(0xCCCCCC);
 
-                output.line((cities+i)->x, (cities+i)->y, (cities+j)->x, (cities+j)->y );
+                //output.line((cities+i)->x, (cities+i)->y, (cities+j)->x, (cities+j)->y );
             }
         }
         
@@ -104,43 +127,130 @@ void planetEtchApp::keyPressed(int key){
 	}
 }
 
-
 void planetEtchApp::initCities() {
-    
     ofxCsv csv;
-    csv.loadFile(ofToDataPath("worldcitiespop.csv"));
-    int NUM_CSV_COLUMNS = 6;
-    int COL_COUNTRY = 0;
-    int COL_X = 2;
-    int COL_Y = 3;
-    int COL_POP = 5;
+    csv.loadFile(ofToDataPath("allcities.csv"));
     
     numCities = csv.numRows;
     cities = new city[numCities];
+    unsigned long cityIndex = 0;
     
     float x;
     float y;
     
-    for(int i=0; i<csv.numRows; i++) {
+    for(int i=0; i<numCities; i++) {
+        
+        
         /*cout << endl << csv.data[i][0] << endl;
         cout << "pop = " << csv.data[i][COL_POP] << endl;
         cout << "x = " << csv.data[i][COL_X] << endl;
         cout << "y = " << csv.data[i][COL_Y] << endl;
         */
         
-        x = adjustX(ofToFloat(csv.data[i][COL_X]));
-        y = adjustY(ofToFloat(csv.data[i][COL_Y]));
+        //x = adjustX(ofToFloat(csv.data[i][COL_X]));
+        //y = adjustY(ofToFloat(csv.data[i][COL_Y]));
+        
+        x = ofToFloat(csv.data[i][OUTPUT_COL_LNG]);
+        y = ofToFloat(csv.data[i][OUTPUT_COL_LAT]);
+        x = lngToX(x);
+        y = latToY(y);
+        
+        
+        x = adjustX(x);
+        y = adjustY(y);
+        
+        /*
+        cout << "x = ";
+        cout << x;
+        cout << endl;
+        cout << "y = ";
+        cout << y;
+        cout << endl;
+        */
+        
+        string countryString = csv.getString(i, OUTPUT_COL_COUNTRY);
+        unsigned long hashID = hash(countryString.c_str());
+        
+        
+        float pop =  ofToFloat(csv.data[i][OUTPUT_COL_POP]);
+        
+        (cities+i)->setVars( /*CANVAS_WIDTH/4 + x/2*/x, y, pop, hashID);  // pop not used right now
+
         
         
         
-        (cities+i)->setVars( /*CANVAS_WIDTH/4 + x/2*/x, y, ofToFloat(csv.data[i][COL_POP]), ofToInt(csv.data[i][COL_COUNTRY]));  // pop not used right now
+        //(cities+i)->setVars( /*CANVAS_WIDTH/4 + x/2*/x, y, ofToFloat(csv.data[i][COL_POP]), ofToInt(csv.data[i][COL_COUNTRY]));  // pop not used right now
     }
 }
 
-float planetEtchApp::adjustX(float x) {
-    float HIGHEST_X = 59;
-    float LOWEST_X = -37;
 
+void planetEtchApp::filterCSV() {
+    ofxCsv inputCSV;
+    inputCSV.loadFile(ofToDataPath("cities_master.csv"));
+    
+    ofxCsv outputCSV;
+    //outputCSV.createFile(ofToDataPath("allcities.csv"));
+    
+    unsigned long badRecords = 0;
+    unsigned long goodRecords = 0;
+    unsigned long totalRecords = inputCSV.numRows;
+    
+    for(unsigned long i=0; i<inputCSV.numRows; i++) {
+        float pop = ofToFloat(inputCSV.data[i][INPUT_COL_POP]);
+        
+        if( pop == 0) {
+            badRecords++;
+        }
+        else {
+            // save this line in a CSV
+           // OUTPUT_COL_COUNTRY          (0)
+/*#define OUTPUT_COL_CITY             (1)
+#define OUTPUT_COL_POP              (2)
+#define OUTPUT_COL_LAT              (3)
+#define OUTPUT_COL_LNG
+*/
+            
+            outputCSV.setString(goodRecords, OUTPUT_COL_COUNTRY, inputCSV.data[i][INPUT_COL_COUNTRY]);
+            outputCSV.setString(goodRecords, OUTPUT_COL_CITY, inputCSV.data[i][INPUT_COL_CITY]);
+            
+            outputCSV.setFloat(goodRecords, OUTPUT_COL_POP, pop);
+            
+            float lat = ofToFloat(inputCSV.data[i][INPUT_COL_LAT]);
+            float lng = ofToFloat(inputCSV.data[i][INPUT_COL_LNG]);
+            
+            outputCSV.setFloat(goodRecords, OUTPUT_COL_LAT, lat);
+            outputCSV.setFloat(goodRecords, OUTPUT_COL_LNG, lng);
+            
+            
+            cout << "Pop: ";
+            cout << pop;
+            cout << endl;
+            goodRecords++;
+        }
+        
+    }
+    
+    outputCSV.saveFile(ofToDataPath("allcities.csv"), ",");
+    
+    cout << "Total records: ";
+    cout << totalRecords;
+    cout << endl;
+    
+    cout << "Good records: ";
+    cout << goodRecords;
+    cout << endl;
+    
+    cout << "Bad records: ";
+    cout << badRecords;
+    cout << endl;
+}
+
+
+
+float planetEtchApp::adjustX(float x) {
+    float HIGHEST_X = 160;
+    float LOWEST_X = -160;   //-37;
+    
     return map(x, LOWEST_X, HIGHEST_X, CANVAS_MARGIN, CANVAS_WIDTH-CANVAS_MARGIN );
 }
 
@@ -150,13 +260,21 @@ float planetEtchApp::adjustY(float y) {
     //float HIGHEST_Y = 153;
     
     // flipped
-    float LOWEST_Y = -153;
-    float HIGHEST_Y = 123;
+    float LOWEST_Y = -160;  //-153;
+    float HIGHEST_Y = 160;
     y = -y;
     
-    cout << "y = " << y << endl;
+    //cout << "y = " << y << endl;
     
     return map(y, LOWEST_Y, HIGHEST_Y, CANVAS_MARGIN, CANVAS_HEIGHT-CANVAS_MARGIN );
+}
+
+float planetEtchApp::lngToX(float x) {
+    return x;
+}
+
+float planetEtchApp::latToY(float y) {
+    return y;
 }
 
 float planetEtchApp::map(float m, float in_min, float in_max, float out_min, float out_max)
@@ -164,6 +282,19 @@ float planetEtchApp::map(float m, float in_min, float in_max, float out_min, flo
     //cout << "m = " << m << endl;
     return (m - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
 }
+
+unsigned long  planetEtchApp::hash(const char *str) {
+    unsigned long hash = 5381;
+    int c;
+    
+    // go to end of line
+    while ((c = *str++) != 0) {
+        hash = ((hash << 5) + hash) + c; /* hash * 33 + c */
+    }
+    
+    return hash;
+}
+
 
 /*
  (cities+i)->setVars( ofRandom(CANVAS_MARGIN, CANVAS_WIDTH-CANVAS_MARGIN),
