@@ -20,6 +20,11 @@
 #define OUTPUT_COL_LAT              (3)
 #define OUTPUT_COL_LNG              (4)
 
+
+//--------------------------------------------------------------
+#define CARBON_EMISSIONS_CSV_COL_COUNTRY_ID (1)     // COUNTRY ID
+#define CARBON_EMISSIONS_CSV_COL_CARBON     (2)     // PER CAPITA CARBON
+
 // uncommenting will make it so that we go through the worlds CSV file
 //     and extract only cities that have a non-zero population
 // #define FILTER_CSV
@@ -29,12 +34,14 @@ void planetEtchApp::setup(){
 	capture = false;
     numCities = 0;
     cities = NULL;
+    displayMode = DISPLAY_MODE_POPULATION;
     
 #ifdef FILTER_CSV
     filterCSV();
 #endif
     
     initCities();
+    initCarbonEmissions();
 }
 
 //--------------------------------------------------------------
@@ -64,6 +71,7 @@ void planetEtchApp::draw(){
     //output.fill();
 	output.setColor(0x000000);
     
+    /*
     for( int i = 0; i < numCities; i++ ) {
         for( int j = 0; j < numCities; j++ ) {
             if( i != j && (cities+i)->cnum == (cities+j)->cnum ) {
@@ -74,13 +82,15 @@ void planetEtchApp::draw(){
                 //output.line((cities+i)->x, (cities+i)->y, (cities+j)->x, (cities+j)->y );
             }
         }
-        
-       
     }
+     */
     
     for( int i = 0; i < numCities; i++ ) {
          ofSetHexColor(0x000000);
-         (cities+i)->draw(output);
+        if( displayMode == DISPLAY_MODE_POPULATION )
+            (cities+i)->drawPopulation(output);
+           else
+            (cities+i)->drawCarbonFootprint(output);
      }
     
 //    for( int i = 0; i < numCities; i++ ) {
@@ -122,9 +132,11 @@ void planetEtchApp::draw(){
 
 //--------------------------------------------------------------
 void planetEtchApp::keyPressed(int key){
-	if(key == ' '){
+	if(key == 's'){
 		capture = true;
 	}
+    else if( key == ' ' )
+        toggleDisplayMode();
 }
 
 void planetEtchApp::initCities() {
@@ -181,6 +193,31 @@ void planetEtchApp::initCities() {
         
         //(cities+i)->setVars( /*CANVAS_WIDTH/4 + x/2*/x, y, ofToFloat(csv.data[i][COL_POP]), ofToInt(csv.data[i][COL_COUNTRY]));  // pop not used right now
     }
+    
+    csv.clear();
+}
+
+//-- load carbon emissions data file
+void planetEtchApp::initCarbonEmissions() {
+    ofxCsv csv;
+    csv.loadFile(ofToDataPath("carbonemissions.csv"));
+    
+    unsigned long numCountries = csv.numRows;
+    
+    for( int i = 0; i < numCountries; i++ ) {
+        string countryString = csv.getString(i, CARBON_EMISSIONS_CSV_COL_COUNTRY_ID);
+        unsigned long hashID = hash(countryString.c_str());
+        
+        // go through each city and check for match
+        for(int j=0; j<numCities; j++) {
+            if( (cities+j)->getCountryNum() == hashID ) {
+                float carbon = ofToFloat(csv.data[i][CARBON_EMISSIONS_CSV_COL_CARBON]);
+                (cities+j)->setPerCapitaCarbonEmission(carbon);
+            }
+        }
+    }
+    
+    csv.clear();
 }
 
 
@@ -295,6 +332,12 @@ unsigned long  planetEtchApp::hash(const char *str) {
     return hash;
 }
 
+void planetEtchApp::toggleDisplayMode() {
+    if( displayMode == DISPLAY_MODE_POPULATION )
+        displayMode = DISPLAY_MODE_CARBON_FOOTPRINT;
+    else
+        displayMode = DISPLAY_MODE_POPULATION;
+}
 
 /*
  (cities+i)->setVars( ofRandom(CANVAS_MARGIN, CANVAS_WIDTH-CANVAS_MARGIN),

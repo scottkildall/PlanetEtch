@@ -11,6 +11,12 @@
 
 city::city() {
     vSquares = NULL;
+    pop = 0;
+    perCapitaCarbon = 0;
+    carbonFootprint = 0;
+    
+    carbonFootprint = 1000000;
+    bHasCarbonData = false;
 }
         
 city::~city() {
@@ -60,12 +66,22 @@ void city::setVars(float _x, float _y, float _pop, unsigned long _cnum) {
 
 }
 
-void city::draw(ofxVectorGraphics &output) {
+void city::drawPopulation(ofxVectorGraphics &output) {
     //if( pop < 50000)
      //   return;
     
     for( int i = 0; i < numSquares; i++ ) {
         (vSquares+i)->draw(output);
     }
+}
 
+void city::drawCarbonFootprint(ofxVectorGraphics &output) {
+    output.fill();
+    output.circle(x, y, (sqrt(carbonFootprint))/750 );
+}
+
+void city::setPerCapitaCarbonEmission(float _perCapitaCarbon) {
+    perCapitaCarbon = _perCapitaCarbon;
+    carbonFootprint = perCapitaCarbon * pop;
+    bHasCarbonData = true;
 }

@@ -22,17 +22,26 @@ public:
     city();
     ~city();
     
-    void setVars(float _x, float _y, float _pop, unsigned long );
-    void draw(ofxVectorGraphics &output);
+    void setVars(float _x, float _y, float _pop, unsigned long _cnum );
+    unsigned long getCountryNum() { return cnum; }
     
+    void setPerCapitaCarbonEmission(float _perCapitaCarbon);
+    void drawPopulation(ofxVectorGraphics &output);
+    void drawCarbonFootprint(ofxVectorGraphics &output);
+    
+    
+    
+private:
     float x;
     float y;
     float pop;
+    float perCapitaCarbon;
+    float carbonFootprint;      // gets caluclated after setPerCapitaCarbonEmission()
     unsigned long cnum;
+    bool bHasCarbonData;              // true if we have a matching carbon footprint
     
-private:
-    char country[256];
     int numSquares;
+    
     vSquare *vSquares;
 };
 

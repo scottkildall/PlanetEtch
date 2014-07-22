@@ -13,6 +13,9 @@ using namespace wng;
 #define CANVAS_HEIGHT (CANVAS_WIDTH/CANVAS_RATIO)
 #define CANVAS_MARGIN (20)
 
+#define DISPLAY_MODE_POPULATION         (1)
+#define DISPLAY_MODE_CARBON_FOOTPRINT   (2)
+
 class planetEtchApp : public ofBaseApp{
 
 	public:
@@ -37,7 +40,7 @@ class planetEtchApp : public ofBaseApp{
 
 		
     private:
-    
+        int displayMode;       // one the defined values
         float adjustX(float x);
         float adjustY(float y);
         float map(float x, float in_min, float in_max, float out_min, float out_max);
@@ -50,6 +53,9 @@ class planetEtchApp : public ofBaseApp{
         unsigned long  hash(const char *str);
     
         void initCities();
+        void initCarbonEmissions();
+        void toggleDisplayMode();
+    
         city *cities;
         long numCities;
 
