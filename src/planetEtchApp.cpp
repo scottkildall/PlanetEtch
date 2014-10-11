@@ -57,7 +57,10 @@ void planetEtchApp::draw(){
 	//so we only capture one frame when capture
 	//is set to true
 	if(capture){
-		output.beginEPS("citypop.ps");
+        if( displayMode == DISPLAY_MODE_POPULATION )
+            output.beginEPS("city_population.ps");
+        else if( displayMode == DISPLAY_MODE_CARBON_FOOTPRINT )
+            output.beginEPS("city_carbon.ps");
 	}
 
 	//do we want filled shapes or outlines?
@@ -85,12 +88,13 @@ void planetEtchApp::draw(){
     }
      */
     
+    float minPop = 250000;
     for( int i = 0; i < numCities; i++ ) {
          ofSetHexColor(0x000000);
         if( displayMode == DISPLAY_MODE_POPULATION )
-            (cities+i)->drawPopulation(output);
+            (cities+i)->drawPopulation(output, minPop);
            else
-            (cities+i)->drawCarbonFootprint(output);
+            (cities+i)->drawCarbonFootprint(output, minPop);
      }
     
 //    for( int i = 0; i < numCities; i++ ) {
@@ -235,7 +239,7 @@ void planetEtchApp::filterCSV() {
     for(unsigned long i=0; i<inputCSV.numRows; i++) {
         float pop = ofToFloat(inputCSV.data[i][INPUT_COL_POP]);
         
-        if( pop == 0) {
+        if( pop == 0 ) {
             badRecords++;
         }
         else {

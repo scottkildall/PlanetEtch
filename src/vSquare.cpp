@@ -24,7 +24,7 @@ void vSquare::draw(ofxVectorGraphics &output) {
     if( s == 0 )
         return;
     
-    output.noFill();
+    //output.noFill();
     output.fill();
     
     output.rect(x, y, s, s);

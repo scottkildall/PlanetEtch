@@ -26,8 +26,8 @@ public:
     unsigned long getCountryNum() { return cnum; }
     
     void setPerCapitaCarbonEmission(float _perCapitaCarbon);
-    void drawPopulation(ofxVectorGraphics &output);
-    void drawCarbonFootprint(ofxVectorGraphics &output);
+    void drawPopulation(ofxVectorGraphics &output, float minPop);
+    void drawCarbonFootprint(ofxVectorGraphics &output, float minPop);
     
     
     
